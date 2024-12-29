@@ -49,9 +49,14 @@ def get_markets():
 
 def build_tc_pairs_list(pairs):
     tc_pairs = {}
+    pair_counter = 0
     for key in markets:
+        pair_counter = pair_counter + 1
         if "PERP" in markets[key]["id"] and not any(perp in markets[key]["id"] for perp in config.PAIRS_BLACKLIST):
             tc_pairs[markets[key]["id"]] = ""
+        if pair_counter >= config.MAX_BOT_ALLOWED:
+            return tc_pairs
+
     return tc_pairs
 
 
